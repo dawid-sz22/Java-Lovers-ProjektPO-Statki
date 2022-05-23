@@ -1,43 +1,30 @@
 package com.company;
 
-public class AircraftCarrier {
+public class AircraftCarrier extends Ship {
 
-    private final String name;
-    private final String team;
-
-    private int hp = 1000;
-    private final int damage = 40;
-
-    private int positionX;
-    private int positionY;
-
-    private int fireRangeX = 1;
-    private int fireRangeY = 1;
-
-    private final int viewRangeX = 1;
-    private final int viewRangeY = 1;
-
-    private int positionChangeX = 1;
-    private int positionChangeY = 1;
-
-    public AircraftCarrier(String name, String team) {
-        this.name = name;
-        this.team = team;
+    AircraftCarrier() {
+        super();
+    }
+    AircraftCarrier(String team, int positionX, int positionY)
+    {
+        super(team,positionX,positionY);
+        super.setName("AircraftCarrier");
+        super.setDamage(40);
+        super.setHp(1000);
+        super.setFireRangeX(1);
+        super.setFireRangeY(1);
+        super.setViewRangeX(1);
+        super.setViewRangeY(1);
+        super.setPositionChangeX(2);
+        super.setPositionChangeY(2);
     }
 
-    public int getPositionX() {
-        return positionX;
+    //constructor to copy object ???
+    AircraftCarrier(AircraftCarrier aircraftCarrier)
+    {
+        super(aircraftCarrier);
+        super.setName("Lotniskowiec");
     }
 
-    public void setPositionX(int positionX) {
-        this.positionX = positionX;
-    }
 
-    public int getPositionY() {
-        return positionY;
-    }
-
-    public void setPositionY(int positionY) {
-        this.positionY = positionY;
-    }
 }
