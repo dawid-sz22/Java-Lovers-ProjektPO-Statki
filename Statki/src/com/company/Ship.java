@@ -20,11 +20,11 @@ public abstract class Ship {
     Ship()
     {
         countShips++;
-        positionX = positionY = positionChangeY = positionChangeX = hp = damage = viewRangeX = viewRangeY = fireRangeX =fireRangeY = -1;
+        positionX = positionY = positionChangeY = positionChangeX = hp = damage = viewRangeX = viewRangeY = fireRangeX = fireRangeY = -1;
         name = team = "None";
     }
 
-    Ship(String team, int positionX,int positionY)
+    Ship(String team, int positionX, int positionY)
     {
         countShips++;
         this.team = team;
@@ -35,7 +35,7 @@ public abstract class Ship {
     //constructor to copy object ???
     Ship(Ship ship)
     {
-        this(ship.team,ship.positionX,ship.positionY);
+        this(ship.team, ship.positionX, ship.positionY);
         this.name = ship.name;
         this.damage = ship.damage;
         this.hp = ship.hp;

@@ -5,10 +5,9 @@ public class Cruiser extends Ship{
     Cruiser() {
         super();
     }
-
     Cruiser(String team, int positionX, int positionY)
     {
-        super(team,positionX,positionY);
+        super(team, positionX, positionY);
         super.setName("Cruiser");
         super.setDamage(45);
         super.setHp(600);

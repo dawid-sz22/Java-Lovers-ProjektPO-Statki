@@ -38,14 +38,14 @@ public class Sea {
     }
 
     //constructor to create sea X x Y, with amount of particular ships in each team
-    Sea(int x, int y,int RedAmountAircraftCarriers, int RedAmountSubmarines,int RedAmountCruisers,int BlueAmountAircraftCarriers, int BlueAmountSubmarines,int BlueAmountCruisers)
+    Sea(int x, int y, int RedAmountAircraftCarriers, int RedAmountSubmarines, int RedAmountCruisers, int BlueAmountAircraftCarriers, int BlueAmountSubmarines, int BlueAmountCruisers)
     {
         this(x, y);
         addUnits(RedAmountAircraftCarriers,RedAmountSubmarines,RedAmountCruisers,BlueAmountAircraftCarriers,BlueAmountSubmarines,BlueAmountCruisers);
     }
 
     //method to add units on sea
-    public void addUnits(int RedAmountAircraftCarriers, int RedAmountSubmarines,int RedAmountCruisers,int BlueAmountAircraftCarriers, int BlueAmountSubmarines,int BlueAmountCruisers)
+    public void addUnits(int RedAmountAircraftCarriers, int RedAmountSubmarines,int RedAmountCruisers,int BlueAmountAircraftCarriers, int BlueAmountSubmarines, int BlueAmountCruisers)
     {
         this.RedAmountAircraftCarriers = RedAmountAircraftCarriers;
         this.RedAmountSubmarines = RedAmountSubmarines;
@@ -133,8 +133,8 @@ public class Sea {
     {
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
-                System.out.print(sea[i][j]+"  ");
-                if (j==x-1)
+                System.out.print(sea[i][j] + "  ");
+                if (j == x-1)
                     System.out.print(sea[i][j]);
             }
             System.out.println();

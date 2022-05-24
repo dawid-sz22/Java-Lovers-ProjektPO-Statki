@@ -7,7 +7,7 @@ public class AircraftCarrier extends Ship {
     }
     AircraftCarrier(String team, int positionX, int positionY)
     {
-        super(team,positionX,positionY);
+        super(team, positionX, positionY);
         super.setName("AircraftCarrier");
         super.setDamage(40);
         super.setHp(1000);
