@@ -98,7 +98,7 @@ public abstract class Ship {
 
         while (countPointsToUse>0)
         {
-            keySet = pointsToUse.keySet();
+            keySet = pointsToUse.keySet(); //update keySetu po usunięciu puktu niezdatnego do użycia
             keyArray = keySet.toArray(new Integer[keySet.size()]);
 
             xRand = random.nextInt(keyArray[1]-keyArray[0]+1)+keyArray[0]; //losowanie x z przedziału np. -1 do 0
