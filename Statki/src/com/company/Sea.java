@@ -48,8 +48,7 @@ public class Sea {
         this.numOfBlueCruisers = numOfBlueCruisers;
     }
 
-
-    //Get'ery
+    //Gettery
     public int getY() {
         return y;
     }

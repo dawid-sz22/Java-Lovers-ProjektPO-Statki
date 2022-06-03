@@ -8,9 +8,8 @@ public class SeaCreator {
 
     Sea baltic;
 
-    SeaCreator(int x, int y)
-    {
-        baltic = new Sea(x,y);
+    SeaCreator(int x, int y) {
+        baltic = new Sea(x, y);
         clearUsedPoints();
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
@@ -18,8 +17,8 @@ public class SeaCreator {
             }
         }
     }
-    SeaCreator(int x, int y, int numOfRedAircraftCarriers, int numOfRedSubmarines, int numOfRedCruisers, int numOfBlueAircraftCarriers, int numOfBlueSubmarines, int numOfBlueCruisers)
-    {
+
+    SeaCreator(int x, int y, int numOfRedAircraftCarriers, int numOfRedSubmarines, int numOfRedCruisers, int numOfBlueAircraftCarriers, int numOfBlueSubmarines, int numOfBlueCruisers) {
         baltic = new Sea(x, y, numOfRedAircraftCarriers, numOfRedSubmarines, numOfRedCruisers, numOfBlueAircraftCarriers, numOfBlueSubmarines, numOfBlueCruisers);
         clearUsedPoints();
         for (int i = 0; i < y; i++) {
@@ -31,8 +30,7 @@ public class SeaCreator {
     }
 
     //Metoda do zerowania tablicy użytych punktów
-    public void clearUsedPoints()
-    {
+    public void clearUsedPoints() {
         //Wypełnienie tablicy wartościami 0
         for (int i = 0; i < baltic.getY(); i++) {
             for (int j = 0; j < baltic.getX(); j++) {
@@ -42,8 +40,7 @@ public class SeaCreator {
     }
 
     //Metoda dodająca statki na mape w sposób losowy
-    public void addUnitsToSea(int numOfRedAircraftCarriers, int numOfRedSubmarines, int numOfRedCruisers, int numOfBlueAircraftCarriers, int numOfBlueSubmarines, int numOfBlueCruisers)
-    {
+    public void addUnitsToSea(int numOfRedAircraftCarriers, int numOfRedSubmarines, int numOfRedCruisers, int numOfBlueAircraftCarriers, int numOfBlueSubmarines, int numOfBlueCruisers) {
         int countRedUnits = numOfRedAircraftCarriers + numOfRedSubmarines + numOfRedCruisers;
         int countBlueUnits = numOfBlueAircraftCarriers + numOfBlueSubmarines + numOfBlueCruisers;
         //int countAllUnits = countRedUnits + countBlueUnits;
@@ -57,9 +54,9 @@ public class SeaCreator {
         while (countRedUnits != 0) {
             do {
                 if (baltic.getX() % 2 == 0) {
-                    xRand = randomPoints.nextInt(baltic.getX() / 2  - 1) ;
+                    xRand = randomPoints.nextInt(baltic.getX() / 2 - 1);
                 } else {
-                    xRand = randomPoints.nextInt((baltic.getX() - 1) / 2  -1);
+                    xRand = randomPoints.nextInt((baltic.getX() - 1) / 2 - 1);
                 }
                 yRand = randomPoints.nextInt(baltic.getY());
 
@@ -68,7 +65,7 @@ public class SeaCreator {
             if (numOfRedAircraftCarriers != 0) {
                 //Dodanie nowego obiektu do listy statków czerwonych
                 baltic.getRedShips().add(new AircraftCarrier("Red", xRand, yRand));
-                baltic.getSea()[yRand][xRand] = "R";
+                baltic.getSea()[yRand][xRand] = "RA";
                 //Zaznaczenie na mapie że w tym miejscu znajduje się czerwony lotniskowiec
                 baltic.getPointsUsedOnMap()[yRand][xRand] = 1;
                 numOfRedAircraftCarriers--;
@@ -78,7 +75,7 @@ public class SeaCreator {
 
             if (numOfRedSubmarines != 0) {
                 baltic.getRedShips().add(new Submarine("Red", xRand, yRand));
-                baltic.getSea()[yRand][xRand] = "R";
+                baltic.getSea()[yRand][xRand] = "RS";
                 baltic.getPointsUsedOnMap()[yRand][xRand] = 1;
                 numOfRedSubmarines--;
                 countRedUnits--;
@@ -87,7 +84,7 @@ public class SeaCreator {
 
             if (numOfRedCruisers != 0) {
                 baltic.getRedShips().add(new Cruiser("Red", xRand, yRand));
-                baltic.getSea()[yRand][xRand] = "R";
+                baltic.getSea()[yRand][xRand] = "RC";
                 baltic.getPointsUsedOnMap()[yRand][xRand] = 1;
                 numOfRedCruisers--;
                 countRedUnits--;
@@ -108,7 +105,7 @@ public class SeaCreator {
 
             if (numOfBlueAircraftCarriers != 0) {
                 baltic.getBlueShips().add(new AircraftCarrier("Blue", xRand, yRand));
-                baltic.getSea()[yRand][xRand] = "B";
+                baltic.getSea()[yRand][xRand] = "BA";
                 baltic.getPointsUsedOnMap()[yRand][xRand] = 2;
                 numOfBlueAircraftCarriers--;
                 countBlueUnits--;
@@ -117,7 +114,7 @@ public class SeaCreator {
 
             if (numOfBlueSubmarines != 0) {
                 baltic.getBlueShips().add(new Submarine("Blue", xRand, yRand));
-                baltic.getSea()[yRand][xRand] = "B";
+                baltic.getSea()[yRand][xRand] = "BS";
                 baltic.getPointsUsedOnMap()[yRand][xRand] = 2;
                 numOfBlueSubmarines--;
                 countBlueUnits--;
@@ -126,7 +123,7 @@ public class SeaCreator {
 
             if (numOfBlueCruisers != 0) {
                 baltic.getBlueShips().add(new Cruiser("Blue", xRand, yRand));
-                baltic.getSea()[yRand][xRand] = "B";
+                baltic.getSea()[yRand][xRand] = "BC";
                 baltic.getPointsUsedOnMap()[yRand][xRand] = 2;
                 numOfBlueCruisers--;
                 countBlueUnits--;
@@ -135,8 +132,7 @@ public class SeaCreator {
     }
 
     //Podgląd tablicy punktow na mapie
-    public void printPoints()
-    {
+    public void printPoints() {
         for (int i = 0; i < baltic.getY(); i++) {
             for (int j = 0; j < baltic.getX(); j++) {
                 System.out.print(baltic.getPointsUsedOnMap()[i][j]);
@@ -151,48 +147,98 @@ public class SeaCreator {
         System.out.print("   ");
         for (int j = 0; j < baltic.getX(); j++) { //rysowanie współrzędnych
             if (j == baltic.getX() - 1) {
-                System.out.printf("%2d",j);
+                System.out.printf("%2d", j);
             } else {
-                System.out.printf("%2d ",j);
+                System.out.printf("%2d ", j);
             }
         }
         System.out.println();
         for (int i = 0; i < baltic.getY(); i++) {
-            System.out.printf("%2d ",i);//rysowanie współrzędnych
+            System.out.printf("%2d ", i);//rysowanie współrzędnych
             for (int j = 0; j < baltic.getX(); j++) {
                 if (j == baltic.getX() - 1) {
-                    System.out.printf("%2s",baltic.getSea()[i][j]);
+                    System.out.printf("%2s", baltic.getSea()[i][j]);
                 } else {
-                    System.out.printf("%2s ",baltic.getSea()[i][j]);
+                    System.out.printf("%2s ", baltic.getSea()[i][j]);
                 }
             }
             System.out.println();
         }
-
         System.out.println();
-        System.out.println();
-
     }
 
-    //Metoda umożliwiająca ruch wszystkich statków w danej rundzie
-    public void moveAllShips(int firstStart) //firstStart  0-Blue first   1-Red first
+    //Metoda umożliwiająca ruch statków
+    public void moveAllShips(int firstStart, int numberOfIterations) //firstStart  0-Blue first   1-Red first
     {
-        if (firstStart==1) {
-            for (Ship ship : baltic.getRedShips()) {
-                ship.move(baltic);
+        for (int i = 1; i <= numberOfIterations; i++) {
+            if (firstStart == 1) {
+                for (Ship ship : baltic.getRedShips()) {
+                    ship.move(baltic);
+                }
+                for (Ship ship : baltic.getBlueShips()) {
+                    ship.move(baltic);
+                }
             }
-            for (Ship ship : baltic.getBlueShips()) {
-                ship.move(baltic);
-            }
-        }
-        if (firstStart==0) {
-            for (Ship ship : baltic.getBlueShips()) {
-                ship.move(baltic);
-            }
-            for (Ship ship : baltic.getRedShips()) {
-                ship.move(baltic);
+            if (firstStart == 0) {
+                for (Ship ship : baltic.getBlueShips()) {
+                    ship.move(baltic);
+                }
+                for (Ship ship : baltic.getRedShips()) {
+                    ship.move(baltic);
+                }
             }
         }
     }
 
+    //Metoda umożliwiająca zadanie obrażeń przeciwnikowi
+    public void makeDamage() {
+        for (Ship ship : baltic.getRedShips()) {
+            ship.attack(baltic);
+        }
+        for (Ship ship : baltic.getBlueShips()) {
+            ship.attack(baltic);
+        }
+    }
+
+    //Podgląd punktów hp danego statku
+    public void seeHp() {
+        for (Ship ship : baltic.getRedShips()) {
+            System.out.println("Team: " + ship.getTeam() + " " + ship.getName() + " HP: " + ship.getHp());
+        }
+        for (Ship ship : baltic.getBlueShips()) {
+            System.out.println("Team: " + ship.getTeam() + " " + ship.getName() + " HP: " + ship.getHp());
+        }
+        System.out.println();
+    }
+
+    //Usunięcie martwych jednostek z listy
+    public void removeDeadUnitsFromTheList() {
+
+        // Listy pomocnicze do przechowania wraków (niezbędne do robienia updateu głównych list)
+        List<Ship> removedRedShips = new ArrayList<>();
+        List<Ship> removedBlueShips = new ArrayList<>();
+
+        //sprawdzanie każdego czerwonego statku po kolei czy isAlive? - jeżeli nie to dodajemy go do listy statków do usunięcia
+        for (Ship ship : baltic.getRedShips()) {
+            if (!ship.isAlive()) {
+                baltic.getPointsUsedOnMap()[ship.getPositionY()][ship.getPositionX()] = 0; //usuwamy punkt na którym była kiedyś dana jednostka
+                baltic.getSea()[ship.getPositionY()][ship.getPositionX()] = "="; //zaznaczamy na mapie puste pole
+                removedRedShips.add(ship); //dodajemy wrak do listy pomocniczej
+                ship = null; //usuwamy dany obiekt
+            }
+        }
+        baltic.getRedShips().removeAll(removedRedShips); //usuwamy z listy głównej wszystkie zniszczone statki, przy pomocy listy wraków
+
+        //To samo z niebieskimi
+        for (Ship ship : baltic.getBlueShips()) {
+            if (!ship.isAlive()) {
+                baltic.getPointsUsedOnMap()[ship.getPositionY()][ship.getPositionX()] = 0;
+                baltic.getSea()[ship.getPositionY()][ship.getPositionX()] = "=";
+                removedBlueShips.add(ship);
+                ship = null;
+            }
+        }
+        baltic.getBlueShips().removeAll(removedBlueShips);
+    }
 }
+
