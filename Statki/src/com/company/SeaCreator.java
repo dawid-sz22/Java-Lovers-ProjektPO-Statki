@@ -97,7 +97,7 @@ public class SeaCreator {
                 if (baltic.getX() % 2 == 0) {
                     xRand = randomPoints.nextInt(baltic.getX() - baltic.getX() / 2) + baltic.getX() / 2;
                 } else {
-                    xRand = randomPoints.nextInt(baltic.getX() - (baltic.getX() - 1) / 2 + 1) + (baltic.getX() - 1) / 2 + 1;
+                    xRand = randomPoints.nextInt(baltic.getX() - ((baltic.getX() - 1) / 2 + 1)) + (baltic.getX() - 1) / 2 + 1;
                 }
                 yRand = randomPoints.nextInt(baltic.getY());
 
@@ -209,36 +209,6 @@ public class SeaCreator {
             System.out.println("Team: " + ship.getTeam() + " " + ship.getName() + " HP: " + ship.getHp());
         }
         System.out.println();
-    }
-
-    //Usunięcie martwych jednostek z listy
-    public void removeDeadUnitsFromTheList() {
-
-        // Listy pomocnicze do przechowania wraków (niezbędne do robienia updateu głównych list)
-        List<Ship> removedRedShips = new ArrayList<>();
-        List<Ship> removedBlueShips = new ArrayList<>();
-
-        //sprawdzanie każdego czerwonego statku po kolei czy isAlive? - jeżeli nie to dodajemy go do listy statków do usunięcia
-        for (Ship ship : baltic.getRedShips()) {
-            if (!ship.isAlive()) {
-                baltic.getPointsUsedOnMap()[ship.getPositionY()][ship.getPositionX()] = 0; //usuwamy punkt na którym była kiedyś dana jednostka
-                baltic.getSea()[ship.getPositionY()][ship.getPositionX()] = "="; //zaznaczamy na mapie puste pole
-                removedRedShips.add(ship); //dodajemy wrak do listy pomocniczej
-                ship = null; //usuwamy dany obiekt
-            }
-        }
-        baltic.getRedShips().removeAll(removedRedShips); //usuwamy z listy głównej wszystkie zniszczone statki, przy pomocy listy wraków
-
-        //To samo z niebieskimi
-        for (Ship ship : baltic.getBlueShips()) {
-            if (!ship.isAlive()) {
-                baltic.getPointsUsedOnMap()[ship.getPositionY()][ship.getPositionX()] = 0;
-                baltic.getSea()[ship.getPositionY()][ship.getPositionX()] = "=";
-                removedBlueShips.add(ship);
-                ship = null;
-            }
-        }
-        baltic.getBlueShips().removeAll(removedBlueShips);
     }
 }
 

@@ -7,8 +7,7 @@ public class Submarine extends Ship {
         super.setName("Submarine");
         super.setHp(300);
         super.setDamage(70);
-        super.setPositionChangeX(1);
-        super.setPositionChangeY(1);
+        super.setAmountOfMoves(1);
         super.setViewRangeX(3);
         super.setViewRangeY(3);
         super.setFireRangeX(2);

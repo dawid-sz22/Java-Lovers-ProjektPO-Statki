@@ -7,8 +7,7 @@ public class Cruiser extends Ship {
         super.setName("Cruiser");
         super.setHp(600);
         super.setDamage(45);
-        super.setPositionChangeX(1);
-        super.setPositionChangeY(1);
+        super.setAmountOfMoves(1);
         super.setViewRangeX(2);
         super.setViewRangeY(2);
         super.setFireRangeX(2);

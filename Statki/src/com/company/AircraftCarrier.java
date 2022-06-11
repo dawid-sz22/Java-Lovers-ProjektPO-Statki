@@ -7,8 +7,7 @@ public class AircraftCarrier extends Ship {
         super.setName("AircraftCarrier");
         super.setHp(1000);
         super.setDamage(40);
-        super.setPositionChangeX(2);
-        super.setPositionChangeY(2);
+        super.setAmountOfMoves(2);
         super.setViewRangeX(1);
         super.setViewRangeY(1);
         super.setFireRangeX(1);
