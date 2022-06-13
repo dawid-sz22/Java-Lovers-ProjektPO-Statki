@@ -1,5 +1,12 @@
 package com.company;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 public class Simulation {
 
@@ -35,9 +42,46 @@ public class Simulation {
         while (true) {
             switch (tryInput("Podaj typ symulacji:" + "\n1. Symulacja z pliku" + "\n2. Symulacja z komunikacją z użytkownikiem. ")) {
                 case 1:
-                    // TUTAJ TRZEBA DOKOŃCZYĆ, WCZYT Z PLIKU ITP.
+                {
+                    final int countParameters = 10; //10 - liczba parametrów, potrzebnych do zrobienia symulacji
+                    String fileName;
+                    System.out.print("Podaj nazwę pliku, który chcesz wczytać: ");
+                    Scanner scanner = new Scanner(System.in);
+                    fileName = scanner.nextLine();
+
+                    List<List<Integer>> listOfParameters = new ArrayList<>();
+                    String s;
+                    int n=0;
+                    try (BufferedReader br = new BufferedReader(new FileReader("./Tests/"+fileName)))
+                    {
+                        while ((s = br.readLine()) != null)
+                        {
+                            List<String> listStringsFromeLine = Arrays.asList(s.split(";")); //zapisz do listy stringi, oddzielone średnikiem
+                            List<Integer> intList = new ArrayList<>();
+                            for (String x: listStringsFromeLine) { //robienie listy parametrów
+                                intList.add(Integer.valueOf(x));
+                            }
+                            if (intList.size() == countParameters)
+                                listOfParameters.add(intList);  //dodanie listy parametrów, do spisu list z parametrami
+                            else
+                                System.out.println("PODANO ZŁĄ ILOŚĆ PARAMETRÓW!");
+                        }
+                    }
+                    catch (IOException e) {
+                        System.out.println("Nie znaleziono pliku");
+                    }
+
+                    for (int i = 0; i < listOfParameters.size(); i++) {
+                        int j = 0;
+                        balticCreator = new SeaCreator(listOfParameters.get(i).get(j++),listOfParameters.get(i).get(j++),listOfParameters.get(i).get(j++),listOfParameters.get(i).get(j++),
+                                listOfParameters.get(i).get(j++),listOfParameters.get(i).get(j++),listOfParameters.get(i).get(j++),listOfParameters.get(i).get(j++));
+                        balticCreator.stage(listOfParameters.get(i).get(j++),0,listOfParameters.get(i).get(j),fileName);
+                    }
+
                     break;
-                case 2: {
+                }
+                case 2:
+                {
                     while (true) {
                         printMenu();
                         //scan.nextLine();

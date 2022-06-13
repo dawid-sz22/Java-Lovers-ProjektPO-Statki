@@ -24,13 +24,10 @@ public abstract class Ship {
     private int fireRangeX;
     private int fireRangeY;
 
-    public static int countShips;
-    public static int countDeadRedShips;
-    public static int countDeadBlueShips;
+
 
     //Konstruktor
     public Ship(String team, int positionX, int positionY) {
-        countShips++;
         this.team = team;
         this.positionX = positionX;
         this.positionY = positionY;
@@ -327,11 +324,11 @@ public abstract class Ship {
             sea.getSea()[positionY][positionX] = "="; //zaznaczamy na mapie puste pole
 
             if (team.equals("Red")) {
-                countDeadRedShips++; //dodajemy do licznika śmierci +1
+                sea.countDeadRedShipsPlus(1); //dodajemy do licznika śmierci +1
                 sea.getRedShips().remove(this); //usuwamy dany obiekt
             }
             if (team.equals("Blue")) {
-                countDeadBlueShips++; //dodajemy do licznika śmierci +1
+                sea.countDeadBlueShipsPlus(1); //dodajemy do licznika śmierci +1
                 sea.getBlueShips().remove(this); //usuwamy dany obiekt
             }
         }

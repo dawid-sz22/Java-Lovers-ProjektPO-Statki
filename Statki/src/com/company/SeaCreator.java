@@ -1,5 +1,7 @@
 package com.company;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -259,6 +261,66 @@ public class SeaCreator {
                     if (select == 1) seeHp();
                     if (select == 9) break;
                 }
+            }
+        }
+    }
+
+    public void stage(int firstStart, int typeStage, int numberOfIterations, String fileName)
+    {
+        Scanner x = new Scanner(System.in);
+        int select;
+        for (int i = 0; i < numberOfIterations; i++)
+        {
+            if (typeStage == 0) //symulacja z plikiem, bez wyświetlania
+            {
+                moveAllShips(firstStart);
+                makeDamage();
+                countStages++;
+            }
+            if (typeStage == 1) //symulacja z wyświetleniem na jej końcu statystyk i mapy
+            {
+                moveAllShips(firstStart);
+                makeDamage();
+                countStages++;
+                if (i==(numberOfIterations-1))
+                {
+                    printSea();
+                    seeHp();
+                }
+            }
+            if (typeStage == 2) //symulacja z przerwami
+            {
+                moveAllShips(firstStart);
+                makeDamage();
+                countStages++;
+                printSea();
+                while (true) {
+                    System.out.print("Kliknij 1, aby wyświetlić statystyki lub wciśnij 9, aby przejść do kolejnej tury");
+                    if (x.hasNextInt())
+                        select = x.nextInt();
+                    else
+                    {
+                        x.nextLine();
+                        System.out.print("Podano złe wejście! Spróbuj ponownie! ");
+                        continue;
+                    }
+                    if (select == 1) seeHp();
+                    if (select == 9) break;
+                }
+            }
+        }
+        if (typeStage==0)
+        {
+            try (FileWriter writer = new FileWriter("./Tests/RESULT"+fileName,true))
+            {
+                writer.write(baltic.getX()+";"+baltic.getY()+";"+ baltic.getNumOfRedAircraftCarriers()+";"+ baltic.getNumOfRedSubmarines()+";"+ baltic.getNumOfRedCruisers()
+                        +";"+ baltic.getNumOfBlueAircraftCarriers()+";"+ baltic.getNumOfBlueSubmarines()+";"+ baltic.getNumOfBlueCruisers()+";"+firstStart+";"+countStages
+                        +";"+baltic.getCountShips()+";"+baltic.getCountDeadRedShips()+";"+baltic.getCountDeadBlueShips());
+                writer.write("\n");
+            }
+            catch (IOException exception)
+            {
+                System.out.println("Błąd w zapisywaniu!");
             }
         }
     }

@@ -16,6 +16,10 @@ public class Sea {
     private int numOfBlueSubmarines;
     private int numOfBlueCruisers;
 
+    private int countShips;
+    private int countDeadRedShips;
+    private int countDeadBlueShips;
+
 
     //Deklaracja planszy dwuwymiarowej
     private String[][] sea;
@@ -39,6 +43,7 @@ public class Sea {
     //Konstruktor Sea ze statkami
     public Sea(int x, int y, int numOfRedAircraftCarriers, int numOfRedSubmarines, int numOfRedCruisers, int numOfBlueAircraftCarriers, int numOfBlueSubmarines, int numOfBlueCruisers) {
         this(x, y);
+        countShips = numOfRedAircraftCarriers + numOfBlueSubmarines + numOfRedCruisers + numOfBlueAircraftCarriers + numOfBlueSubmarines +numOfBlueCruisers;
         this.numOfRedAircraftCarriers = numOfRedAircraftCarriers;
         this.numOfRedSubmarines = numOfRedSubmarines;
         this.numOfRedCruisers = numOfRedCruisers;
@@ -46,6 +51,21 @@ public class Sea {
         this.numOfBlueAircraftCarriers = numOfBlueAircraftCarriers;
         this.numOfBlueSubmarines = numOfBlueSubmarines;
         this.numOfBlueCruisers = numOfBlueCruisers;
+    }
+
+    public void countShipsPlus(int x)
+    {
+        this.countShips += x;
+    }
+
+    public void countDeadBlueShipsPlus(int x)
+    {
+        this.countDeadBlueShips += x;
+    }
+
+    public void countDeadRedShipsPlus(int x)
+    {
+        this.countDeadRedShips += x;
     }
 
     //Gettery
@@ -97,6 +117,18 @@ public class Sea {
         return pointsUsedOnMap;
     }
 
+    public int getCountShips() {
+        return countShips;
+    }
+
+    public int getCountDeadBlueShips() {
+        return countDeadBlueShips;
+    }
+
+    public int getCountDeadRedShips() {
+        return countDeadRedShips;
+    }
+
     //Set'ery
     public void setBlueShips(List<Ship> blueShips) {
         this.blueShips = blueShips;
@@ -144,5 +176,17 @@ public class Sea {
 
     public void setPointsUsedOnMap(int[][] pointsUsedOnMap) {
         this.pointsUsedOnMap = pointsUsedOnMap;
+    }
+
+    public void setCountDeadBlueShips(int countDeadBlueShips) {
+        this.countDeadBlueShips = countDeadBlueShips;
+    }
+
+    public void setCountDeadRedShips(int countDeadRedShips) {
+        this.countDeadRedShips = countDeadRedShips;
+    }
+
+    public void setCountShips(int countShips) {
+        this.countShips = countShips;
     }
 }
