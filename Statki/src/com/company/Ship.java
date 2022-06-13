@@ -53,7 +53,7 @@ public abstract class Ship {
         if ((positionY-0)>=fireRangeY)
             i = Math.negateExact(fireRangeY);
         else
-            i =  Math.negateExact(positionY);
+            i = Math.negateExact(positionY);
 
         if (((sea.getX()-1)-positionX)>=fireRangeX)
             maxj = fireRangeX;

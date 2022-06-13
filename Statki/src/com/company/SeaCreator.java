@@ -1,12 +1,13 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class SeaCreator {
 
     Sea baltic;
+
+    int countStages = 0;
 
     SeaCreator(int x, int y) {
         baltic = new Sea(x, y);
@@ -143,34 +144,40 @@ public class SeaCreator {
     }
 
     //Wyświetlenie mapy w konsoli
-    public void printSea() {
-        System.out.print("   ");
-        for (int j = 0; j < baltic.getX(); j++) { //rysowanie współrzędnych
-            if (j == baltic.getX() - 1) {
-                System.out.printf("%2d", j);
-            } else {
-                System.out.printf("%2d ", j);
-            }
-        }
-        System.out.println();
-        for (int i = 0; i < baltic.getY(); i++) {
-            System.out.printf("%2d ", i);//rysowanie współrzędnych
-            for (int j = 0; j < baltic.getX(); j++) {
+    public void printSea()
+    {
+            StringBuilder print = new StringBuilder(new String());
+
+            print.append(" ".repeat(((3 + baltic.getX() * 3) - 8) / 2));
+            print.append(String.format("Stage %2d", countStages));
+            print.append(" ".repeat(((3 + baltic.getX() * 3) - 8) / 2));
+            print.append("\n   ");
+            for (int j = 0; j < baltic.getX(); j++) { //rysowanie współrzędnych
                 if (j == baltic.getX() - 1) {
-                    System.out.printf("%2s", baltic.getSea()[i][j]);
+                    print.append(String.format("%2d", j));
                 } else {
-                    System.out.printf("%2s ", baltic.getSea()[i][j]);
+                    print.append(String.format("%2d ", j));
                 }
             }
-            System.out.println();
-        }
-        System.out.println();
+            print.append("\n");
+            for (int i = 0; i < baltic.getY(); i++) {
+                print.append(String.format("%2d ", i));//rysowanie współrzędnych
+                for (int j = 0; j < baltic.getX(); j++) {
+                    if (j == baltic.getX() - 1) {
+                        print.append(String.format("%2s", baltic.getSea()[i][j]));
+                    } else {
+                        print.append(String.format("%2s ", baltic.getSea()[i][j]));
+                    }
+                }
+                print.append("\n");
+            }
+            print.append("\n");
+            System.out.print(print);
     }
 
     //Metoda umożliwiająca ruch statków
-    public void moveAllShips(int firstStart, int numberOfIterations) //firstStart  0-Blue first   1-Red first
+    public void moveAllShips(int firstStart) //firstStart  0-Blue first   1-Red first
     {
-        for (int i = 1; i <= numberOfIterations; i++) {
             if (firstStart == 1) {
                 for (Ship ship : baltic.getRedShips()) {
                     ship.move(baltic);
@@ -187,7 +194,6 @@ public class SeaCreator {
                     ship.move(baltic);
                 }
             }
-        }
     }
 
     //Metoda umożliwiająca zadanie obrażeń przeciwnikowi
@@ -202,13 +208,59 @@ public class SeaCreator {
 
     //Podgląd punktów hp danego statku
     public void seeHp() {
-        for (Ship ship : baltic.getRedShips()) {
-            System.out.println("Team: " + ship.getTeam() + " " + ship.getName() + " HP: " + ship.getHp());
+            for (Ship ship : baltic.getRedShips()) {
+                System.out.println("Team: " + ship.getTeam() + " " + ship.getName() + " HP: " + ship.getHp());
+            }
+            for (Ship ship : baltic.getBlueShips()) {
+                System.out.println("Team: " + ship.getTeam() + " " + ship.getName() + " HP: " + ship.getHp());
+            }
+            System.out.println();
+    }
+
+    public void stage(int firstStart, int typeStage, int numberOfIterations)
+    {
+        Scanner x = new Scanner(System.in);
+        int select;
+        for (int i = 0; i < numberOfIterations; i++)
+        {
+            if (typeStage == 0) //symulacja z plikiem, bez wyświetlania
+            {
+                moveAllShips(firstStart);
+                makeDamage();
+                countStages++;
+            }
+            if (typeStage == 1) //symulacja z wyświetleniem na jej końcu statystyk i mapy
+            {
+                moveAllShips(firstStart);
+                makeDamage();
+                countStages++;
+                if (i==(numberOfIterations-1))
+                {
+                    printSea();
+                    seeHp();
+                }
+            }
+            if (typeStage == 2) //symulacja z przerwami
+            {
+                moveAllShips(firstStart);
+                makeDamage();
+                countStages++;
+                printSea();
+                while (true) {
+                    System.out.print("Kliknij 1, aby wyświetlić statystyki lub wciśnij 9, aby przejść do kolejnej tury");
+                    if (x.hasNextInt())
+                        select = x.nextInt();
+                    else
+                    {
+                        x.nextLine();
+                        System.out.print("Podano złe wejście! Spróbuj ponownie! ");
+                        continue;
+                    }
+                    if (select == 1) seeHp();
+                    if (select == 9) break;
+                }
+            }
         }
-        for (Ship ship : baltic.getBlueShips()) {
-            System.out.println("Team: " + ship.getTeam() + " " + ship.getName() + " HP: " + ship.getHp());
-        }
-        System.out.println();
     }
 }
 
