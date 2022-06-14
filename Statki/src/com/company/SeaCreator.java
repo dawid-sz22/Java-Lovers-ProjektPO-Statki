@@ -223,6 +223,7 @@ public class SeaCreator {
     {
         Scanner x = new Scanner(System.in);
         int select;
+        String fileName;
         for (int i = 0; i < numberOfIterations; i++)
         {
             if (typeStage == 0) //symulacja z plikiem, bez wyświetlania
@@ -261,6 +262,22 @@ public class SeaCreator {
                     if (select == 1) seeHp();
                     if (select == 9) break;
                 }
+            }
+        }
+        if (typeStage==0)
+        {
+            System.out.print("Podaj nazwę pliku, aby zapisać dane (nazwapliku.txt): ");
+            fileName = x.nextLine();
+            try (FileWriter writer = new FileWriter("./Tests/"+fileName,true))
+            {
+                writer.write(baltic.getX()+";"+baltic.getY()+";"+ baltic.getNumOfRedAircraftCarriers()+";"+ baltic.getNumOfRedSubmarines()+";"+ baltic.getNumOfRedCruisers()
+                        +";"+ baltic.getNumOfBlueAircraftCarriers()+";"+ baltic.getNumOfBlueSubmarines()+";"+ baltic.getNumOfBlueCruisers()+";"+firstStart+";"+countStages
+                        +";"+baltic.getCountShips()+";"+baltic.getCountDeadRedShips()+";"+baltic.getCountDeadBlueShips());
+                writer.write("\n");
+            }
+            catch (IOException exception)
+            {
+                System.out.println("Błąd w zapisywaniu!");
             }
         }
     }

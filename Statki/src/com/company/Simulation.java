@@ -16,10 +16,13 @@ public class Simulation {
     private int tryInput(String information)
     {
         Scanner scan = new Scanner(System.in);
+
         while (true) {
             System.out.print(information);
                 if (scan.hasNextInt())
+                {
                     return scan.nextInt();
+                }
                 else
                 {
                     scan.nextLine();
@@ -40,7 +43,7 @@ public class Simulation {
     public void start() {
         int firstStart=0,NumberOfIterations=0;
         while (true) {
-            switch (tryInput("Podaj typ symulacji:" + "\n1. Symulacja z pliku" + "\n2. Symulacja z komunikacją z użytkownikiem. ")) {
+            switch (tryInput("1. Symulacja z pliku" + "\n2. Symulacja z komunikacją z użytkownikiem. "+"\nPodaj typ symulacji: ")) {
                 case 1:
                 {
                     final int countParameters = 10; //10 - liczba parametrów, potrzebnych do zrobienia symulacji

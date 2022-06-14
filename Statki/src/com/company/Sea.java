@@ -35,7 +35,7 @@ public class Sea {
     //Konstruktor Sea
     Sea(int x, int y) {
         sea = new String[y][x];
-        pointsUsedOnMap = new int[x][y];
+        pointsUsedOnMap = new int[y][x];
         this.x = x;
         this.y = y;
     }
