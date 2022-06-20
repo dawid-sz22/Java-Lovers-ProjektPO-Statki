@@ -59,9 +59,9 @@ public class Simulation {
                     {
                         while ((s = br.readLine()) != null)
                         {
-                            List<String> listStringsFromeLine = Arrays.asList(s.split(";")); //zapisz do listy stringi, oddzielone średnikiem
+                            List<String> listStringsFromLine = Arrays.asList(s.split("\t")); //zapisz do listy stringi, oddzielone średnikiem
                             List<Integer> intList = new ArrayList<>();
-                            for (String x: listStringsFromeLine) { //robienie listy parametrów
+                            for (String x: listStringsFromLine) { //robienie listy parametrów
                                 intList.add(Integer.valueOf(x));
                             }
                             if (intList.size() == countParameters)
@@ -90,10 +90,21 @@ public class Simulation {
                         //scan.nextLine();
                         switch (tryInput("Podaj opcję, którą chcesz wybrać: ")) {
                             case 1: {
-                                balticCreator = new SeaCreator(tryInput("Podaj wymiar x: "), tryInput("Podaj wymiar y: "),
+                                balticCreator = new SeaCreator(tryInput("Podaj wymiar x (x>1): "), tryInput("Podaj wymiar y: "),
                                         tryInput("\nRED SIDE:\nPodaj liczbe lotniskowców: "), tryInput("Podaj liczbe okrętów wodnych: "), tryInput("Podaj liczbe krążowników: "),
                                         tryInput("\nBLUE SIDE:\nPodaj liczbe lotniskowców: "), tryInput("Podaj liczbe okrętów wodnych: "), tryInput("Podaj liczbe krążowników: "));
-                                System.out.println("Mapa została utworzona!");
+                                if (balticCreator.isAmountOfShipsOk())
+                                    System.out.println("Mapa została utworzona!");
+                                else
+                                {
+                                    while (!balticCreator.isAmountOfShipsOk())
+                                    {
+                                        System.out.println("Podano zbyt dużą ilość statków! Podaj ponownie.");
+                                        balticCreator.addUnitsToSea(tryInput("\nRED SIDE:\nPodaj liczbe lotniskowców: "), tryInput("Podaj liczbe okrętów wodnych: "),
+                                                tryInput("Podaj liczbe krążowników: "), tryInput("\nBLUE SIDE:\nPodaj liczbe lotniskowców: "),
+                                                tryInput("Podaj liczbe okrętów wodnych: "), tryInput("Podaj liczbe krążowników: "));
+                                    }
+                                }
                                 break;
                             }
                             case 2: {

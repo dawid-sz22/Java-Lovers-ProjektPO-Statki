@@ -298,6 +298,18 @@ public abstract class Ship {
             for (Ship ship : sea.getRedShips()) {
                 if ((Math.abs(positionX - ship.getPositionX()) <= fireRangeX) && (Math.abs(positionY - ship.getPositionY()) <= fireRangeY)) { // sprawdzenie potencjalnych celów w polu rażenia
                     ship.receiveDamage(damage,sea); // przeciwnik przyjmuje obrażenie
+                    if (name.equals("Submarine"))
+                    {
+                        sea.setCountBlueSubmarinesDamageDealt(sea.getCountBlueSubmarinesDamageDealt()+damage);
+                    }
+                    if (name.equals("Cruiser"))
+                    {
+                        sea.setCountBlueCruisersDamageDealt(sea.getCountBlueCruisersDamageDealt()+damage);
+                    }
+                    if (name.equals("AircraftCarrier"))
+                    {
+                        sea.setCountBlueAircraftCarriersDamageDealt(sea.getCountBlueAircraftCarriersDamageDealt()+damage);
+                    }
                     break; // po oddaniu jednego strzała kończy serie
                 }
             }
@@ -307,6 +319,18 @@ public abstract class Ship {
             for (Ship ship : sea.getBlueShips()) {
                 if ((Math.abs(positionX - ship.getPositionX()) <= fireRangeX) && (Math.abs(positionY - ship.getPositionY()) <= fireRangeY)) {
                     ship.receiveDamage(damage,sea);
+                    if (name.equals("Submarine"))
+                    {
+                        sea.setCountRedSubmarinesDamageDealt(sea.getCountRedSubmarinesDamageDealt()+damage);
+                    }
+                    if (name.equals("Cruiser"))
+                    {
+                        sea.setCountRedCruisersDamageDealt(sea.getCountRedCruisersDamageDealt()+damage);
+                    }
+                    if (name.equals("AircraftCarrier"))
+                    {
+                        sea.setCountRedAircraftCarriersDamageDealt(sea.getCountRedAircraftCarriersDamageDealt() + damage);
+                    }
                     break;
                 }
             }
@@ -320,15 +344,44 @@ public abstract class Ship {
             hp = hp - damage;
         }
         if (hp <= 0) {
+            sea.setCountShips(sea.getCountShips() - 1);
             sea.getPointsUsedOnMap()[positionY][positionX] = 0; //usuwamy punkt na którym była kiedyś dana jednostka
             sea.getSea()[positionY][positionX] = "="; //zaznaczamy na mapie puste pole
 
             if (team.equals("Red")) {
-                sea.countDeadRedShipsPlus(1); //dodajemy do licznika śmierci +1
+                if (name.equals("Submarine"))
+                {
+                    sea.setNumOfDeadRedSubmarines(sea.getNumOfDeadRedSubmarines() + 1);
+                    sea.setCountRedSubmarinesDamageTaken(sea.getCountRedSubmarinesDamageTaken()+damage);
+                }
+                if (name.equals("Cruiser"))
+                {
+                    sea.setNumOfDeadRedCruisers(sea.getNumOfDeadRedCruisers() + 1);
+                    sea.setCountRedCruisersDamageTaken(sea.getCountRedCruisersDamageTaken()+damage);
+                }
+                if (name.equals("AircraftCarrier"))
+                {
+                    sea.setNumOfDeadRedAircraftCarriers(sea.getNumOfDeadRedAircraftCarriers() + 1);
+                    sea.setCountRedAircraftCarriersDamageTaken(sea.getCountRedAircraftCarriersDamageTaken()+damage);
+                }
                 sea.getRedShips().remove(this); //usuwamy dany obiekt
             }
             if (team.equals("Blue")) {
-                sea.countDeadBlueShipsPlus(1); //dodajemy do licznika śmierci +1
+                if (name.equals("Submarine"))
+                {
+                    sea.setNumOfDeadBlueSubmarines(sea.getNumOfDeadBlueSubmarines() + 1);
+                    sea.setCountBlueSubmarinesDamageTaken(sea.getCountBlueSubmarinesDamageTaken()+damage);
+                }
+                if (name.equals("Cruiser"))
+                {
+                    sea.setNumOfDeadBlueCruisers(sea.getNumOfDeadBlueCruisers() + 1);
+                    sea.setCountBlueCruisersDamageTaken(sea.getCountBlueCruisersDamageTaken()+damage);
+                }
+                if (name.equals("AircraftCarrier"))
+                {
+                    sea.setNumOfDeadBlueAircraftCarriers(sea.getNumOfDeadBlueAircraftCarriers() + 1);
+                    sea.setCountBlueAircraftCarriersDamageTaken(sea.getCountBlueAircraftCarriersDamageTaken()+damage);
+                }
                 sea.getBlueShips().remove(this); //usuwamy dany obiekt
             }
         }

@@ -8,7 +8,7 @@ public class Sea {
     private int x;
     private int y;
 
-    //Deklaracja zmiennych przechowujących dane o ilości statków
+    //Deklaracja zmiennych przechowujących dane o ilości statków oraz potrzebnych do badań nad symulacją
     private int numOfRedAircraftCarriers;
     private int numOfRedSubmarines;
     private int numOfRedCruisers;
@@ -16,9 +16,31 @@ public class Sea {
     private int numOfBlueSubmarines;
     private int numOfBlueCruisers;
 
+    private int numOfDeadRedAircraftCarriers;
+    private int numOfDeadRedSubmarines;
+    private int numOfDeadRedCruisers;
+
+    private int numOfDeadBlueAircraftCarriers;
+    private int numOfDeadBlueSubmarines;
+    private int numOfDeadBlueCruisers;
+
+    private int countRedAircraftCarriersDamageDealt;
+    private int countRedSubmarinesDamageDealt;
+    private int countRedCruisersDamageDealt;
+
+    private int countBlueAircraftCarriersDamageDealt;
+    private int countBlueSubmarinesDamageDealt;
+    private int countBlueCruisersDamageDealt;
+
+    private int countRedAircraftCarriersDamageTaken;
+    private int countRedSubmarinesDamageTaken;
+    private int countRedCruisersDamageTaken;
+
+    private int countBlueAircraftCarriersDamageTaken;
+    private int countBlueSubmarinesDamageTaken;
+    private int countBlueCruisersDamageTaken;
+
     private int countShips;
-    private int countDeadRedShips;
-    private int countDeadBlueShips;
 
 
     //Deklaracja planszy dwuwymiarowej
@@ -43,29 +65,17 @@ public class Sea {
     //Konstruktor Sea ze statkami
     public Sea(int x, int y, int numOfRedAircraftCarriers, int numOfRedSubmarines, int numOfRedCruisers, int numOfBlueAircraftCarriers, int numOfBlueSubmarines, int numOfBlueCruisers) {
         this(x, y);
-        countShips = numOfRedAircraftCarriers + numOfBlueSubmarines + numOfRedCruisers + numOfBlueAircraftCarriers + numOfBlueSubmarines +numOfBlueCruisers;
-        this.numOfRedAircraftCarriers = numOfRedAircraftCarriers;
-        this.numOfRedSubmarines = numOfRedSubmarines;
-        this.numOfRedCruisers = numOfRedCruisers;
+        if (numOfRedAircraftCarriers+numOfRedSubmarines+numOfRedCruisers+numOfBlueAircraftCarriers+numOfBlueSubmarines+numOfBlueCruisers <= (x*y)) { //Sprawdzanie czy nie ma dużej ilości statków na mapę
+            this.numOfRedAircraftCarriers = numOfRedAircraftCarriers;
+            this.numOfRedSubmarines = numOfRedSubmarines;
+            this.numOfRedCruisers = numOfRedCruisers;
 
-        this.numOfBlueAircraftCarriers = numOfBlueAircraftCarriers;
-        this.numOfBlueSubmarines = numOfBlueSubmarines;
-        this.numOfBlueCruisers = numOfBlueCruisers;
-    }
+            this.numOfBlueAircraftCarriers = numOfBlueAircraftCarriers;
+            this.numOfBlueSubmarines = numOfBlueSubmarines;
+            this.numOfBlueCruisers = numOfBlueCruisers;
+            countShips = numOfRedAircraftCarriers+numOfRedSubmarines+numOfRedCruisers+numOfBlueAircraftCarriers+numOfBlueSubmarines+numOfBlueCruisers;
+        }
 
-    public void countShipsPlus(int x)
-    {
-        this.countShips += x;
-    }
-
-    public void countDeadBlueShipsPlus(int x)
-    {
-        this.countDeadBlueShips += x;
-    }
-
-    public void countDeadRedShipsPlus(int x)
-    {
-        this.countDeadRedShips += x;
     }
 
     //Gettery
@@ -121,13 +131,78 @@ public class Sea {
         return countShips;
     }
 
-    public int getCountDeadBlueShips() {
-        return countDeadBlueShips;
+    public int getNumOfDeadBlueAircraftCarriers() {
+        return numOfDeadBlueAircraftCarriers;
     }
 
-    public int getCountDeadRedShips() {
-        return countDeadRedShips;
+    public int getNumOfDeadBlueCruisers() {
+        return numOfDeadBlueCruisers;
     }
+
+    public int getNumOfDeadBlueSubmarines() {
+        return numOfDeadBlueSubmarines;
+    }
+
+    public int getNumOfDeadRedAircraftCarriers() {
+        return numOfDeadRedAircraftCarriers;
+    }
+
+    public int getNumOfDeadRedCruisers() {
+        return numOfDeadRedCruisers;
+    }
+
+    public int getNumOfDeadRedSubmarines() {
+        return numOfDeadRedSubmarines;
+    }
+
+    public int getCountBlueAircraftCarriersDamageDealt() {
+        return countBlueAircraftCarriersDamageDealt;
+    }
+
+    public int getCountBlueAircraftCarriersDamageTaken() {
+        return countBlueAircraftCarriersDamageTaken;
+    }
+
+    public int getCountBlueCruisersDamageDealt() {
+        return countBlueCruisersDamageDealt;
+    }
+
+    public int getCountBlueCruisersDamageTaken() {
+        return countBlueCruisersDamageTaken;
+    }
+
+    public int getCountBlueSubmarinesDamageDealt() {
+        return countBlueSubmarinesDamageDealt;
+    }
+
+    public int getCountBlueSubmarinesDamageTaken() {
+        return countBlueSubmarinesDamageTaken;
+    }
+
+    public int getCountRedAircraftCarriersDamageDealt() {
+        return countRedAircraftCarriersDamageDealt;
+    }
+
+    public int getCountRedAircraftCarriersDamageTaken() {
+        return countRedAircraftCarriersDamageTaken;
+    }
+
+    public int getCountRedCruisersDamageDealt() {
+        return countRedCruisersDamageDealt;
+    }
+
+    public int getCountRedCruisersDamageTaken() {
+        return countRedCruisersDamageTaken;
+    }
+
+    public int getCountRedSubmarinesDamageDealt() {
+        return countRedSubmarinesDamageDealt;
+    }
+
+    public int getCountRedSubmarinesDamageTaken() {
+        return countRedSubmarinesDamageTaken;
+    }
+
 
     //Set'ery
     public void setBlueShips(List<Ship> blueShips) {
@@ -178,15 +253,81 @@ public class Sea {
         this.pointsUsedOnMap = pointsUsedOnMap;
     }
 
-    public void setCountDeadBlueShips(int countDeadBlueShips) {
-        this.countDeadBlueShips = countDeadBlueShips;
-    }
-
-    public void setCountDeadRedShips(int countDeadRedShips) {
-        this.countDeadRedShips = countDeadRedShips;
-    }
 
     public void setCountShips(int countShips) {
         this.countShips = countShips;
     }
+
+    public void setNumOfDeadBlueAircraftCarriers(int numOfDeadBlueAircraftCarriers) {
+        this.numOfDeadBlueAircraftCarriers = numOfDeadBlueAircraftCarriers;
+    }
+
+    public void setNumOfDeadBlueCruisers(int numOfDeadBlueCruisers) {
+        this.numOfDeadBlueCruisers = numOfDeadBlueCruisers;
+    }
+
+    public void setNumOfDeadBlueSubmarines(int numOfDeadBlueSubmarines) {
+        this.numOfDeadBlueSubmarines = numOfDeadBlueSubmarines;
+    }
+
+    public void setNumOfDeadRedAircraftCarriers(int numOfDeadRedAircraftCarriers) {
+        this.numOfDeadRedAircraftCarriers = numOfDeadRedAircraftCarriers;
+    }
+
+    public void setNumOfDeadRedCruisers(int numOfDeadRedCruisers) {
+        this.numOfDeadRedCruisers = numOfDeadRedCruisers;
+    }
+
+    public void setNumOfDeadRedSubmarines(int numOfDeadRedSubmarines) {
+        this.numOfDeadRedSubmarines = numOfDeadRedSubmarines;
+    }
+
+    public void setCountBlueAircraftCarriersDamageDealt(int countBlueAircraftCarriersDamageDealt) {
+        this.countBlueAircraftCarriersDamageDealt = countBlueAircraftCarriersDamageDealt;
+    }
+
+    public void setCountBlueAircraftCarriersDamageTaken(int countBlueAircraftCarriersDamageTaken) {
+        this.countBlueAircraftCarriersDamageTaken = countBlueAircraftCarriersDamageTaken;
+    }
+
+    public void setCountBlueCruisersDamageDealt(int countBlueCruisersDamageDealt) {
+        this.countBlueCruisersDamageDealt = countBlueCruisersDamageDealt;
+    }
+
+    public void setCountBlueCruisersDamageTaken(int countBlueCruisersDamageTaken) {
+        this.countBlueCruisersDamageTaken = countBlueCruisersDamageTaken;
+    }
+
+    public void setCountBlueSubmarinesDamageDealt(int countBlueSubmarinesDamageDealt) {
+        this.countBlueSubmarinesDamageDealt = countBlueSubmarinesDamageDealt;
+    }
+
+    public void setCountBlueSubmarinesDamageTaken(int countBlueSubmarinesDamageTaken) {
+        this.countBlueSubmarinesDamageTaken = countBlueSubmarinesDamageTaken;
+    }
+
+    public void setCountRedAircraftCarriersDamageDealt(int countRedAircraftCarriersDamageDealt) {
+        this.countRedAircraftCarriersDamageDealt = countRedAircraftCarriersDamageDealt;
+    }
+
+    public void setCountRedAircraftCarriersDamageTaken(int countRedAircraftCarriersDamageTaken) {
+        this.countRedAircraftCarriersDamageTaken = countRedAircraftCarriersDamageTaken;
+    }
+
+    public void setCountRedCruisersDamageDealt(int countRedCruisersDamageDealt) {
+        this.countRedCruisersDamageDealt = countRedCruisersDamageDealt;
+    }
+
+    public void setCountRedCruisersDamageTaken(int countRedCruisersDamageTaken) {
+        this.countRedCruisersDamageTaken = countRedCruisersDamageTaken;
+    }
+
+    public void setCountRedSubmarinesDamageDealt(int countRedSubmarinesDamageDealt) {
+        this.countRedSubmarinesDamageDealt = countRedSubmarinesDamageDealt;
+    }
+
+    public void setCountRedSubmarinesDamageTaken(int countRedSubmarinesDamageTaken) {
+        this.countRedSubmarinesDamageTaken = countRedSubmarinesDamageTaken;
+    }
+
 }

@@ -11,6 +11,8 @@ public class SeaCreator {
 
     int countStages = 0;
 
+    private boolean isAmountOfShipsOk = false;
+
     SeaCreator(int x, int y) {
         baltic = new Sea(x, y);
         clearUsedPoints();
@@ -23,13 +25,13 @@ public class SeaCreator {
 
     SeaCreator(int x, int y, int numOfRedAircraftCarriers, int numOfRedSubmarines, int numOfRedCruisers, int numOfBlueAircraftCarriers, int numOfBlueSubmarines, int numOfBlueCruisers) {
         baltic = new Sea(x, y, numOfRedAircraftCarriers, numOfRedSubmarines, numOfRedCruisers, numOfBlueAircraftCarriers, numOfBlueSubmarines, numOfBlueCruisers);
-        clearUsedPoints();
-        for (int i = 0; i < y; i++) {
-            for (int j = 0; j < x; j++) {
-                baltic.getSea()[i][j] = "=";
+            clearUsedPoints();
+            for (int i = 0; i < y; i++) {
+                for (int j = 0; j < x; j++) {
+                    baltic.getSea()[i][j] = "=";
+                }
             }
-        }
-        addUnitsToSea(numOfRedAircraftCarriers, numOfRedSubmarines, numOfRedCruisers, numOfBlueAircraftCarriers, numOfBlueSubmarines, numOfBlueCruisers);
+            addUnitsToSea(numOfRedAircraftCarriers, numOfRedSubmarines, numOfRedCruisers, numOfBlueAircraftCarriers, numOfBlueSubmarines, numOfBlueCruisers);
     }
 
     //Metoda do zerowania tablicy użytych punktów
@@ -46,8 +48,15 @@ public class SeaCreator {
     public void addUnitsToSea(int numOfRedAircraftCarriers, int numOfRedSubmarines, int numOfRedCruisers, int numOfBlueAircraftCarriers, int numOfBlueSubmarines, int numOfBlueCruisers) {
         int countRedUnits = numOfRedAircraftCarriers + numOfRedSubmarines + numOfRedCruisers;
         int countBlueUnits = numOfBlueAircraftCarriers + numOfBlueSubmarines + numOfBlueCruisers;
-        //int countAllUnits = countRedUnits + countBlueUnits;
 
+        if (countBlueUnits + countRedUnits > (baltic.getX()*baltic.getY())) //Sprawdzanie czy nie ma dużej ilości statków na mapę
+        {
+            isAmountOfShipsOk = false;
+            return;
+        }
+        else isAmountOfShipsOk = true;
+
+        baltic.setCountShips(countRedUnits+countBlueUnits);
         //Rzeczy potrzebne do tworzenia randomowych liczb
         Random randomPoints = new Random();
         int xRand;
@@ -57,9 +66,9 @@ public class SeaCreator {
         while (countRedUnits != 0) {
             do {
                 if (baltic.getX() % 2 == 0) {
-                    xRand = randomPoints.nextInt(baltic.getX() / 2 - 1);
+                    xRand = randomPoints.nextInt(baltic.getX() / 2);
                 } else {
-                    xRand = randomPoints.nextInt((baltic.getX() - 1) / 2 - 1);
+                    xRand = randomPoints.nextInt((baltic.getX() - 1) / 2 );
                 }
                 yRand = randomPoints.nextInt(baltic.getY());
 
@@ -188,7 +197,7 @@ public class SeaCreator {
                     ship.move(baltic);
                 }
             }
-            if (firstStart == 0) {
+            if (firstStart == 2) {
                 for (Ship ship : baltic.getBlueShips()) {
                     ship.move(baltic);
                 }
@@ -199,12 +208,24 @@ public class SeaCreator {
     }
 
     //Metoda umożliwiająca zadanie obrażeń przeciwnikowi
-    public void makeDamage() {
-        for (Ship ship : baltic.getRedShips()) {
-            ship.attack(baltic);
+    public void makeDamage(int firstStart) {
+        if (firstStart == 1)
+        {
+            for (Ship ship : baltic.getRedShips()) {
+                ship.attack(baltic);
+            }
+            for (Ship ship : baltic.getBlueShips()) {
+                ship.attack(baltic);
+            }
         }
-        for (Ship ship : baltic.getBlueShips()) {
-            ship.attack(baltic);
+        if (firstStart == 2)
+        {
+            for (Ship ship : baltic.getBlueShips()) {
+                ship.attack(baltic);
+            }
+            for (Ship ship : baltic.getRedShips()) {
+                ship.attack(baltic);
+            }
         }
     }
 
@@ -229,13 +250,13 @@ public class SeaCreator {
             if (typeStage == 0) //symulacja z plikiem, bez wyświetlania
             {
                 moveAllShips(firstStart);
-                makeDamage();
+                makeDamage(firstStart);
                 countStages++;
             }
             if (typeStage == 1) //symulacja z wyświetleniem na jej końcu statystyk i mapy
             {
                 moveAllShips(firstStart);
-                makeDamage();
+                makeDamage(firstStart);
                 countStages++;
                 if (i==(numberOfIterations-1))
                 {
@@ -246,7 +267,7 @@ public class SeaCreator {
             if (typeStage == 2) //symulacja z przerwami
             {
                 moveAllShips(firstStart);
-                makeDamage();
+                makeDamage(firstStart);
                 countStages++;
                 printSea();
                 while (true) {
@@ -270,9 +291,10 @@ public class SeaCreator {
             fileName = x.nextLine();
             try (FileWriter writer = new FileWriter("./Tests/"+fileName,true))
             {
-                writer.write(baltic.getX()+";"+baltic.getY()+";"+ baltic.getNumOfRedAircraftCarriers()+";"+ baltic.getNumOfRedSubmarines()+";"+ baltic.getNumOfRedCruisers()
-                        +";"+ baltic.getNumOfBlueAircraftCarriers()+";"+ baltic.getNumOfBlueSubmarines()+";"+ baltic.getNumOfBlueCruisers()+";"+firstStart+";"+countStages
-                        +";"+baltic.getCountShips()+";"+baltic.getCountDeadRedShips()+";"+baltic.getCountDeadBlueShips());
+                writer.write(baltic.getCountShips()+";"+baltic.getNumOfDeadRedAircraftCarriers()+";"+baltic.getNumOfDeadRedSubmarines()+";"+baltic.getNumOfDeadRedCruisers()+";"+baltic.getCountRedAircraftCarriersDamageDealt()+";"
+                        +baltic.getCountRedSubmarinesDamageDealt()+";"+baltic.getCountRedCruisersDamageDealt()+";"+baltic.getCountRedAircraftCarriersDamageTaken()+";"+baltic.getCountRedSubmarinesDamageTaken()+";"+baltic.getCountRedCruisersDamageTaken()+";"
+                        +baltic.getNumOfDeadBlueAircraftCarriers()+";"+baltic.getNumOfDeadBlueSubmarines()+";"+baltic.getNumOfDeadBlueCruisers()+";"+baltic.getCountBlueAircraftCarriersDamageDealt()+";"
+                        +baltic.getCountBlueSubmarinesDamageDealt()+";"+baltic.getCountBlueCruisersDamageDealt()+";"+baltic.getCountBlueAircraftCarriersDamageTaken()+";"+baltic.getCountBlueSubmarinesDamageTaken()+";"+baltic.getCountBlueCruisersDamageTaken());
                 writer.write("\n");
             }
             catch (IOException exception)
@@ -291,13 +313,13 @@ public class SeaCreator {
             if (typeStage == 0) //symulacja z plikiem, bez wyświetlania
             {
                 moveAllShips(firstStart);
-                makeDamage();
+                makeDamage(firstStart);
                 countStages++;
             }
             if (typeStage == 1) //symulacja z wyświetleniem na jej końcu statystyk i mapy
             {
                 moveAllShips(firstStart);
-                makeDamage();
+                makeDamage(firstStart);
                 countStages++;
                 if (i==(numberOfIterations-1))
                 {
@@ -308,7 +330,7 @@ public class SeaCreator {
             if (typeStage == 2) //symulacja z przerwami
             {
                 moveAllShips(firstStart);
-                makeDamage();
+                makeDamage(firstStart);
                 countStages++;
                 printSea();
                 while (true) {
@@ -330,9 +352,10 @@ public class SeaCreator {
         {
             try (FileWriter writer = new FileWriter("./Tests/RESULT"+fileName,true))
             {
-                writer.write(baltic.getX()+";"+baltic.getY()+";"+ baltic.getNumOfRedAircraftCarriers()+";"+ baltic.getNumOfRedSubmarines()+";"+ baltic.getNumOfRedCruisers()
-                        +";"+ baltic.getNumOfBlueAircraftCarriers()+";"+ baltic.getNumOfBlueSubmarines()+";"+ baltic.getNumOfBlueCruisers()+";"+firstStart+";"+countStages
-                        +";"+baltic.getCountShips()+";"+baltic.getCountDeadRedShips()+";"+baltic.getCountDeadBlueShips());
+                writer.write(baltic.getCountShips()+";"+baltic.getNumOfDeadRedAircraftCarriers()+";"+baltic.getNumOfDeadRedSubmarines()+";"+baltic.getNumOfDeadRedCruisers()+";"+baltic.getCountRedAircraftCarriersDamageDealt()+";"
+                        +baltic.getCountRedSubmarinesDamageDealt()+";"+baltic.getCountRedCruisersDamageDealt()+";"+baltic.getCountRedAircraftCarriersDamageTaken()+";"+baltic.getCountRedSubmarinesDamageTaken()+";"+baltic.getCountRedCruisersDamageTaken()+";"
+                        +baltic.getNumOfDeadBlueAircraftCarriers()+";"+baltic.getNumOfDeadBlueSubmarines()+";"+baltic.getNumOfDeadBlueCruisers()+";"+baltic.getCountBlueAircraftCarriersDamageDealt()+";"
+                        +baltic.getCountBlueSubmarinesDamageDealt()+";"+baltic.getCountBlueCruisersDamageDealt()+";"+baltic.getCountBlueAircraftCarriersDamageTaken()+";"+baltic.getCountBlueSubmarinesDamageTaken()+";"+baltic.getCountBlueCruisersDamageTaken());
                 writer.write("\n");
             }
             catch (IOException exception)
@@ -340,6 +363,15 @@ public class SeaCreator {
                 System.out.println("Błąd w zapisywaniu!");
             }
         }
+    }
+
+
+    public int getCountStages() {
+        return countStages;
+    }
+
+    public boolean isAmountOfShipsOk() {
+        return isAmountOfShipsOk;
     }
 }
 
